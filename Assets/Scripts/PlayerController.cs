@@ -1,4 +1,3 @@
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -17,8 +16,6 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private float _thrustForce = 5f;
     [SerializeField] private float _rotationSpeed = 200f;
     [SerializeField] private float _maxVelocity = 10f;
-
-    [SerializeField] List<Sprite> _shipSprites = new();
 
     [Header("References")]
     [SerializeField] private GameObject _frontFire;
@@ -50,24 +47,28 @@ public class PlayerController : MonoBehaviour
 
         _mainCamera = Camera.main;
 
-        switch (_playerNumber)
-        {
-            case PlayerNumber.one:
-                _spriteRenderer.sprite = _shipSprites[0];
-                _spriteRenderer.color = Color.green;
-                break;
-            case PlayerNumber.two:
-                _spriteRenderer.sprite = _shipSprites[1];
-                _spriteRenderer.color = Color.red;
-                break;
-            case PlayerNumber.three:
-                _spriteRenderer.sprite = _shipSprites[2];
-                _spriteRenderer.color = Color.blue;
-                break;
-            case PlayerNumber.four:
-                _spriteRenderer.color = Color.yellow;
-                break;
-        }
+        Debug.Log(_spriteRenderer);
+
+        _spriteRenderer.sprite = GameObject.FindObjectOfType<GameManager>().GetSpriteForPlayer(((int)_playerNumber));
+        gameObject.AddComponent<PolygonCollider2D>();
+
+
+        /*       switch (_playerNumber)
+               {
+                   case PlayerNumber.one:
+
+                       _spriteRenderer.color = Color.green;
+                       break;
+                   case PlayerNumber.two:
+                       _spriteRenderer.color = Color.red;
+                       break;
+                   case PlayerNumber.three:
+                       _spriteRenderer.color = Color.blue;
+                       break;
+                   case PlayerNumber.four:
+                       _spriteRenderer.color = Color.yellow;
+                       break;
+               }*/
     }
 
     private void Update()
