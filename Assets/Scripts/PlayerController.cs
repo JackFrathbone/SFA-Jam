@@ -37,11 +37,13 @@ public class PlayerController : MonoBehaviour
     private float _horizontalInput;
     private float _verticalInput;
 
+    private TrailRenderer _trailRenderer;
     private void Start()
     {
         _rigidbody = GetComponent<Rigidbody2D>();
         _spriteRenderer = GetComponent<SpriteRenderer>();
         _playerInput = FindObjectOfType<PlayerInput>();
+        _trailRenderer = GetComponentInChildren<TrailRenderer>();
 
         _mainCamera = Camera.main;
 
@@ -132,7 +134,10 @@ public class PlayerController : MonoBehaviour
 
     private void SetNewPosition()
     {
+        _trailRenderer.Clear();
+        //_rigidbody.MovePosition(_mainCamera.ViewportToWorldPoint(new Vector3(newX, newY, 10)));
         transform.position = _mainCamera.ViewportToWorldPoint(new Vector3(newX, newY, 10));
+        _trailRenderer.Clear();
     }
 
     private void GetMovementInput()
