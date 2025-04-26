@@ -13,8 +13,11 @@ public class Asteroid : MonoBehaviour
 
     private Rigidbody2D _rigidbody;
 
-    private bool _isWrappingX = false;
-    private bool _isWrappingY = false;
+    private Vector2 screenPos;
+    private Vector2 screenExtents;
+    private float newX;
+    private float newY;
+    private readonly Vector3 halfUnit = Vector3.one / 2;
 
     private void Start()
     {
@@ -37,33 +40,40 @@ public class Asteroid : MonoBehaviour
         WrapScreen();
     }
 
-    private void WrapScreen()
+    void WrapScreen()
     {
-        bool isVisible = _spriteRenderer.isVisible;
+        screenPos = _mainCamera.WorldToViewportPoint(_spriteRenderer.bounds.center);
 
-        if (isVisible)
-        {
-            _isWrappingX = false;
-            _isWrappingY = false;
-            return;
-        }
-        if (_isWrappingX && _isWrappingY)
-        {
-            return;
-        }
+        screenExtents = (_mainCamera.WorldToViewportPoint(_spriteRenderer.bounds.extents) - halfUnit);
 
-        Vector2 viewportPosition = _mainCamera.WorldToViewportPoint(transform.position);
-        Vector2 newPosition = transform.position;
-        if (!_isWrappingX && (viewportPosition.x > 1 || viewportPosition.x < 0))
+        if (screenPos.x > 1.0f + screenExtents.x)
         {
-            newPosition.x = -newPosition.x;
-            _isWrappingX = true;
+            newX = -screenExtents.x;
+            newY = screenPos.y;
+            SetNewPosition();
         }
-        if (!_isWrappingY && (viewportPosition.y > 1 || viewportPosition.y < 0))
+        if (screenPos.x < 0 - screenExtents.x)
         {
-            newPosition.y = -newPosition.y;
-            _isWrappingY = true;
+            newX = 1.0f + screenExtents.x;
+            newY = screenPos.y;
+            SetNewPosition();
         }
-        transform.position = newPosition;
+        if (screenPos.y > 1.0f + screenExtents.y)
+        {
+            newY = -screenExtents.y;
+            newX = screenPos.x;
+            SetNewPosition();
+        }
+        if (screenPos.y < 0 - screenExtents.y)
+        {
+            newY = 1.0f + screenExtents.y;
+            newX = screenPos.x;
+            SetNewPosition();
+        }
+    }
+
+    private void SetNewPosition()
+    {
+        transform.position = _mainCamera.ViewportToWorldPoint(new Vector3(newX, newY, 10));
     }
 }
