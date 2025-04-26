@@ -290,5 +290,7 @@ MonoBehaviour:
   - {fileID: 21300000, guid: 175e82beba3c89a4f9681dc8aafb5a8f, type: 3}
   - {fileID: 21300000, guid: ca6e312efd620f048a90ca002840292c, type: 3}
   - {fileID: 21300000, guid: f3779660b489ae24893ec5e0bbc49f97, type: 3}
+  - {fileID: 21300000, guid: f3779660b489ae24893ec5e0bbc49f97, type: 3}
+  - {fileID: 21300000, guid: 2a48b92553cf114458496ecee08ee676, type: 3}
   spriteRenderer: {fileID: 3187046512086462139}
   randomizeOnStart: 1
