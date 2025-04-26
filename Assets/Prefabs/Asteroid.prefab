@@ -50,8 +50,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _scaleMin: 0.5
   _scaleMax: 1.5
-  _speedMin: 1
-  _speedMax: 5
+  _speedMin: 25
+  _speedMax: 60
 --- !u!212 &4972939521960860806
 SpriteRenderer:
   m_ObjectHideFlags: 0
